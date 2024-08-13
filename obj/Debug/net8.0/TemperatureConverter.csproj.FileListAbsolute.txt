@@ -12,3 +12,4 @@ C:\Users\Tobbe\Programming\TemperatureConverter\obj\Debug\net8.0\refint\Temperat
 C:\Users\Tobbe\Programming\TemperatureConverter\obj\Debug\net8.0\TemperatureConverter.pdb
 C:\Users\Tobbe\Programming\TemperatureConverter\obj\Debug\net8.0\TemperatureConverter.genruntimeconfig.cache
 C:\Users\Tobbe\Programming\TemperatureConverter\obj\Debug\net8.0\ref\TemperatureConverter.dll
+C:\Users\Tobbe\Programming\TemperatureConverter\obj\Debug\net8.0\TemperatureConverter.sourcelink.json
