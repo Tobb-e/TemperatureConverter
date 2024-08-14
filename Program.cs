@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TemperatureConverter
+﻿namespace TemperatureConverter
 {
     class Program
     {
