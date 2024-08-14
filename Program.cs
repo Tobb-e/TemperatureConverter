@@ -1,29 +1,7 @@
-﻿namespace TemperatureConverter
+﻿using System;
+
+namespace TemperatureConverter
 {
-    // Define an interface for temperature conversion
-    public interface ITemperatureConverter
-    {
-        double Convert(double temperature);
-    }
-
-    // Implement the Fahrenheit to Celsius converter
-    public class FahrenheitToCelsiusConverter : ITemperatureConverter
-    {
-        public double Convert(double temperature)
-        {
-            return (temperature - 32) * 5 / 9;
-        }
-    }
-
-    // Implement the Celsius to Fahrenheit converter
-    public class CelsiusToFahrenheitConverter : ITemperatureConverter
-    {
-        public double Convert(double temperature)
-        {
-            return temperature * 9 / 5 + 32;
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
