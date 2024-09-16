@@ -6,11 +6,13 @@
         {
             bool exitRequested = false;
 
-            // Declare the temperature variables once at the start of the method
-            double celsiusTemp = 0;
-            double fahrenheitTemp = 0;
+            // Create a dictionary to map options to converter instances
+            var converters = new Dictionary<string, ITemperatureConverter>
+            {
+                { "1", new CelsiusToFahrenheitConverter() },
+                { "2", new FahrenheitToCelsiusConverter() }
+            };
 
-            // Print out an interactive menu to the user
             while (!exitRequested)
             {
                 Console.WriteLine("|-----------------------------|");
@@ -21,55 +23,41 @@
                 Console.WriteLine("|  (3) Exit                   |");
                 Console.WriteLine("|-----------------------------|");
                 Console.Write("Choose an option (1, 2 or 3): ");
+                
+                // Ensure that the choice is not null
                 string? choice = Console.ReadLine();
 
-                // Create three cases (Celsius - Fahrenheit - Exit) and one default
-                switch (choice)
+                if (string.IsNullOrEmpty(choice))
                 {
-                    case "1":
-                        // Take the input from the user and store it in a variable
-                        Console.Write("Enter Celsius temperature: ");
-                        if (double.TryParse(Console.ReadLine(), out celsiusTemp))
-                        {
-                            // Call the function to convert Celsius to Fahrenheit 
-                            var fahrenheitConverter = new CelsiusToFahrenheitConverter();
-                            fahrenheitTemp = fahrenheitConverter.Convert(celsiusTemp);
-                            Console.WriteLine($"{celsiusTemp} degrees Celsius is {fahrenheitTemp:F1} degrees Fahrenheit\n");
-                        }
-                        else
-                        {
-                            // Print a message if the user enters an invalid character
-                            Console.WriteLine("Invalid input. Please enter a valid numeric value for Celsius.");
-                        }
-                        break;
+                    Console.WriteLine("Invalid choice. Please enter a valid option.");
+                    continue;
+                }
 
-                    case "2":
-                        // Take the input from the user and store it in a variable
-                        Console.Write("Enter Fahrenheit temperature: ");
-                        if (double.TryParse(Console.ReadLine(), out fahrenheitTemp))
-                        {
-                            // Call the function to convert Fahrenheit to Celsius
-                            var celsiusConverter = new FahrenheitToCelsiusConverter();
-                            celsiusTemp = celsiusConverter.Convert(fahrenheitTemp);
-                            Console.WriteLine($"{fahrenheitTemp} degrees Fahrenheit is {celsiusTemp:F1} degrees Celsius\n");
-                        }
-                        else
-                        {
-                            // Print a message if the user enters an invalid character
-                            Console.WriteLine("Invalid input. Please enter a valid numeric value for Fahrenheit");
-                        }
-                        break;
+                if (choice == "3")
+                {
+                    exitRequested = true;
+                    Console.WriteLine("Exiting the Temperature Converter. Thank you!");
+                    continue;
+                }
 
-                    case "3":
-                        // Exit the program
-                        exitRequested = true;
-                        Console.WriteLine("Exiting the Temperature Converter. Thank you!");
-                        break;
-
-                    default:
-                        // Print a message if the user enters an invalid character
-                        Console.WriteLine("Invalid choice. Please enter 1, 2 or 3");
-                        break;
+                // Try to find the corresponding converter in the dictionary
+                if (converters.TryGetValue(choice, out var converter))
+                {
+                    string targetUnit = choice == "1" ? "Fahrenheit" : "Celsius";
+                    Console.Write($"Enter temperature in {(choice == "1" ? "Celsius" : "Fahrenheit")}: ");
+                    if (double.TryParse(Console.ReadLine(), out double inputTemperature))
+                    {
+                        double convertedTemperature = converter.Convert(inputTemperature);
+                        Console.WriteLine($"Converted temperature is {convertedTemperature:F1} degrees {targetUnit}\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid numeric value.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please enter 1, 2 or 3.");
                 }
             }
         }
